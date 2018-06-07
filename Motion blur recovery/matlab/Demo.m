@@ -1,16 +1,17 @@
 clear; clc; clf;
 
 % 读取灰度图片
-I = imread('test.png');
+f = rgb2gray(imread('test_blur.jpg'));
 
 % 将图片数据类型转换为double型
-I = im2double(I);
+
+I = im2double(f);
 
 % 计算运动模糊角度
 theta = ang(I);
 
 % 计算运动模糊长度
-len = lenth_d(I, theta);
+len = lenth_d(I, 35);
 
 % 生成运动模糊核（PSF）
 filt = fspecial('motion', len, theta);
