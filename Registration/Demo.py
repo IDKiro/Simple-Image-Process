@@ -34,8 +34,8 @@ def logpolar(ImgInput):
     ImgOutput = np.zeros((radius, angle))
     for i in range(radius):
         for j in range(angle):
-            h = ocol+np.power(1.044, i+1)*np.sin((j+1)*np.pi/180)
-            w = oraw+np.power(1.044, i+1)*np.cos((j+1)*np.pi/180)
+            h = oraw+np.power(1.044, i+1)*np.sin((j+1)*np.pi/180)
+            w = ocol+np.power(1.044, i+1)*np.cos((j+1)*np.pi/180)
             if h >= 1 and w >= 1 and h <= raw and w <= col:
                 ImgOutput[i, j] = (np.floor(h)+1-h)*(np.floor(w)+1-w)*ImgInput[int(np.floor(h))-1, int(np.floor(w))-1]+(h-np.floor(h))*(np.floor(w)+1-w)*ImgInput[int(np.floor(h)), int(np.floor(w))-1]+(np.floor(h)+1-h)*(w-np.floor(w))*ImgInput[int(np.floor(h))-1, int(np.floor(w))]+(h-np.floor(h))*(w-np.floor(w))*ImgInput[int(np.floor(h)), int(np.floor(w))]
     return ImgOutput
@@ -65,8 +65,8 @@ def imscale(ImgInput, mo, no, s):
     return ImgOutput
 
 if __name__=="__main__":
-    f1 = mpimg.imread('test1_origin.jpg')
-    f2 = mpimg.imread('test1_trans.jpg')
+    f1 = mpimg.imread('test2_origin.jpg')
+    f2 = mpimg.imread('test2_trans.jpg')
 
     plt.subplot(131)
     plt.imshow(f1)
