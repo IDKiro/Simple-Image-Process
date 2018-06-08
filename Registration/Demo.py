@@ -78,6 +78,14 @@ if __name__=="__main__":
     f1g = rgb2gray(f1)
     f2g = rgb2gray(f2)
 
+    # 不同分辨率的填充处理
+    [raw1, col1] = np.shape(f1g)
+    [raw2, col2] = np.shape(f2g)
+    raw = max(raw1, raw2)
+    col = max(col1, col2)
+    f1g = np.lib.pad(f1g, ((0, raw-raw1), (0, col-col1)), 'constant', constant_values=0)
+    f2g = np.lib.pad(f2g, ((0, raw-raw2), (0, col-col2)), 'constant', constant_values=0)
+
     # 图像快速傅里叶变换
     F1 = np.fft.fftshift(np.fft.fft2(f1g))
     F2 = np.fft.fftshift(np.fft.fft2(f2g))
@@ -98,8 +106,7 @@ if __name__=="__main__":
         scale = 1/scale
         f1g, f2g = f2g, f1g
         f1, f2 = f2, f1
-
-    [raw, col] = np.shape(f1g) # TODO: 两者分辨率不一样
+        raw1, raw2, col1, col2 = raw2, raw1, col2, col1
 
     # 伸缩旋转变换后用相位相关法求平移量
     f2Rotate = ndimage.rotate(f2g, -theta)
@@ -116,12 +123,12 @@ if __name__=="__main__":
     print "The movement pixel is", '(', Movraw, ',', Movcol, ')'
 
     # 绘制框选矩形 
-    alpha = np.arctan(float(raw)/col)
-    BoxHalfLen = np.power((np.power(raw/scale, 2)+np.power(col/scale, 2)), 0.5)/2
+    alpha = np.arctan(float(raw2)/col2)
+    BoxHalfLen = np.power((np.power(raw2/scale, 2)+np.power(col2/scale, 2)), 0.5)/2
     beta = alpha+theta/180*np.pi
-    rawOrigin = round(raw/2+Movraw-BoxHalfLen*np.sin(beta)-1)
-    colOrigin = round(col/2+Movcol-BoxHalfLen*np.cos(beta)-1)
-    rect = patches.Rectangle((colOrigin, rawOrigin), col/scale, raw/scale, angle=theta, edgecolor='r', facecolor='none')
+    rawOrigin = round(raw2/2+Movraw-BoxHalfLen*np.sin(beta)-1)
+    colOrigin = round(col2/2+Movcol-BoxHalfLen*np.cos(beta)-1)
+    rect = patches.Rectangle((colOrigin, rawOrigin), col2/scale, raw2/scale, angle=theta, edgecolor='r', facecolor='none')
 
     # 绘制结果
     plt.subplot(133)
