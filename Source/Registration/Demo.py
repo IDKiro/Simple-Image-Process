@@ -3,8 +3,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.patches as patches
-from scipy import ndimage, misc
 import numpy as np
+from scipy import ndimage, misc
 
 # 彩色图像转灰度图
 def rgb2gray(rgb):
@@ -137,4 +137,3 @@ if __name__=="__main__":
     currentAxis = plt.gca()
     currentAxis.add_patch(rect)
     plt.show()
-
