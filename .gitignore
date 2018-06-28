@@ -366,3 +366,8 @@ target_wrapper.*
 
 # QtCreator CMake
 CMakeLists.txt.user*
+
+# Picture
+*.jpg
+*.png
+*.bmp
